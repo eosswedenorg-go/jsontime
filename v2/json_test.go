@@ -1,9 +1,10 @@
 package v2
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var json = ConfigWithCustomTimeFormat
@@ -97,4 +98,35 @@ func TestAlias(t *testing.T) {
 	err = json.Unmarshal(bytes, &book2)
 	assert.Nil(t, err)
 	assert.Equal(t, book1, book2)
+}
+
+func TestMap(t *testing.T) {
+	type Book struct {
+		Name      string         `json:"string"`
+		Published time.Time      `json:"published"`
+		MetaData  map[string]any `json:"metadata"`
+	}
+
+	SetDefaultTimeFormat("2006-01-02", time.UTC)
+
+	book1 := Book{
+		Name:      "The Unofficial Sims Cookbook",
+		Published: time.Date(2022, 11, 10, 0, 0, 0, 0, time.UTC),
+		MetaData: map[string]any{
+			"ISBN":         float64(9781507219454),
+			"weight_grams": float64(578),
+			"description":  "From baked alaska to silly gummy bear pancakes, 85+ recipes to satisfy the hunger need",
+		},
+	}
+
+	encoded := `{"string":"The Unofficial Sims Cookbook","published":"2022-11-10","metadata":{"ISBN":9781507219454,"description":"From baked alaska to silly gummy bear pancakes, 85+ recipes to satisfy the hunger need","weight_grams":578}}`
+
+	bytes, err := json.Marshal(book1)
+	assert.Nil(t, err)
+	assert.Equal(t, encoded, string(bytes))
+
+	decoded := Book{}
+	err = json.Unmarshal(bytes, &decoded)
+	assert.Nil(t, err)
+	assert.Equal(t, book1, decoded)
 }
