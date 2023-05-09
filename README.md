@@ -1,16 +1,16 @@
 # jsontime
 
-![](https://github.com/liamylian/jsontime/workflows/Test/badge.svg)
+![](https://github.com/eosswedenorg-go/jsontime/workflows/Test/badge.svg)
 
 A [json iterator](https://github.com/json-iterator/go) extension that support custom time format.
 
 # Install
 
-`go get github.com/liamylian/jsontime/v2`
+`go get github.com/eosswedenorg-go/jsontime`
 
 or
 
-`go mod edit -require=github.com/liamylian/jsontime/v2@v2.0.0`
+`go mod edit -require=github.com/eosswedenorg-go/jsontime@v2.0.0`
 
 
 ## Usage
@@ -42,7 +42,7 @@ package main
 import (
 	"fmt"
 	"time"
-	
+
 	jsontime "github.com/liamylian/jsontime/v2/v2"
 )
 
